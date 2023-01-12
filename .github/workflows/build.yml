@@ -88,7 +88,7 @@ jobs:
           docker run -d --name indy_pool -p 9701-9708:9701-9708 --net=indy-sdk-network test_pool
 
       - name: Run tests
-        run: cargo test --manifest-path libindy_vdr/Cargo.toml --features local_nodes_pool,local_nodes_pool_did_indy
+        run: cargo test --manifest-path libindy_vdr/Cargo.toml --features local_nodes_pool,did_indy
 
   build-release:
     name: Build library
@@ -277,9 +277,14 @@ jobs:
         target: [aarch64-apple-ios, aarch64-apple-ios-sim, x86_64-apple-ios]
 
     steps:
+<<<<<<< HEAD
       - name: Checkout
         uses: actions/checkout@v3
 
+=======
+      - uses: actions/checkout@v3
+<<<<<<< HEAD
+>>>>>>> 98ed9f1 (clean up features; remove chrono dependency)
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
@@ -301,8 +306,28 @@ jobs:
       - name: Save library
         uses: actions/upload-artifact@v3
         with:
+<<<<<<< HEAD
           name: library-${{ matrix.target}}
           path: target/${{ matrix.target }}/release/libindy_vdr.dylib
+=======
+          name: ${{ matrix.architecture}}
+          path: target/${{ matrix.architecture }}/release/libindy_vdr.dylib
+=======
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.architecture }}
+      - uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --target ${{ matrix.architecture }} --package indy-vdr
+      - name: Save library
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.architecture}}
+          path: target/${{ matrix.architecture }}/release/libindy_vdr.a
+>>>>>>> 7fa12b1 (clean up features; remove chrono dependency)
+>>>>>>> 98ed9f1 (clean up features; remove chrono dependency)
 
   create-ios-xcframework:
     name: Create iOS xcframework
@@ -349,6 +374,7 @@ jobs:
           ]
 
     steps:
+<<<<<<< HEAD
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -357,8 +383,24 @@ jobs:
           cargo install --bins --git https://github.com/rust-embedded/cross --tag v${{ env.CROSS_VERSION }} cross
           cross build --release --target ${{matrix.target}} --package indy-vdr
 
+=======
+      - uses: actions/checkout@v3
+<<<<<<< HEAD
+      - run: |
+          cargo install --bins --git https://github.com/rust-embedded/cross --tag v0.2.4 cross
+          cross build --release --target ${{matrix.architecture}} --package indy-vdr
+>>>>>>> 98ed9f1 (clean up features; remove chrono dependency)
       - name: Save library
         uses: actions/upload-artifact@v3
+=======
+      - uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: build
+          args: --release --target ${{matrix.architecture}} --package indy-vdr
+      - name: Save library
+        uses: actions/upload-artifact@v2
+>>>>>>> 7fa12b1 (clean up features; remove chrono dependency)
         with:
           name: library-${{matrix.target}}
           path: target/${{ matrix.target }}/release/libindy_vdr.so
