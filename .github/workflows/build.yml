@@ -6,9 +6,8 @@ env:
 
 on:
   push:
-    branches: [main, did-indy]
   pull_request:
-    branches: [main, did-indy]
+    branches: [main]
   release:
     types: [created]
   workflow_dispatch:
@@ -284,7 +283,10 @@ jobs:
 =======
       - uses: actions/checkout@v3
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 98ed9f1 (clean up features; remove chrono dependency)
+=======
+>>>>>>> 15caba5 (fix merge issues)
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
@@ -312,6 +314,7 @@ jobs:
 =======
           name: ${{ matrix.architecture}}
           path: target/${{ matrix.architecture }}/release/libindy_vdr.dylib
+<<<<<<< HEAD
 =======
       - uses: actions-rs/toolchain@v1
         with:
@@ -328,6 +331,8 @@ jobs:
           path: target/${{ matrix.architecture }}/release/libindy_vdr.a
 >>>>>>> 7fa12b1 (clean up features; remove chrono dependency)
 >>>>>>> 98ed9f1 (clean up features; remove chrono dependency)
+=======
+>>>>>>> 15caba5 (fix merge issues)
 
   create-ios-xcframework:
     name: Create iOS xcframework
@@ -374,7 +379,6 @@ jobs:
           ]
 
     steps:
-<<<<<<< HEAD
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -383,24 +387,8 @@ jobs:
           cargo install --bins --git https://github.com/rust-embedded/cross --tag v${{ env.CROSS_VERSION }} cross
           cross build --release --target ${{matrix.target}} --package indy-vdr
 
-=======
-      - uses: actions/checkout@v3
-<<<<<<< HEAD
-      - run: |
-          cargo install --bins --git https://github.com/rust-embedded/cross --tag v0.2.4 cross
-          cross build --release --target ${{matrix.architecture}} --package indy-vdr
->>>>>>> 98ed9f1 (clean up features; remove chrono dependency)
       - name: Save library
         uses: actions/upload-artifact@v3
-=======
-      - uses: actions-rs/cargo@v1
-        with:
-          use-cross: true
-          command: build
-          args: --release --target ${{matrix.architecture}} --package indy-vdr
-      - name: Save library
-        uses: actions/upload-artifact@v2
->>>>>>> 7fa12b1 (clean up features; remove chrono dependency)
         with:
           name: library-${{matrix.target}}
           path: target/${{ matrix.target }}/release/libindy_vdr.so
