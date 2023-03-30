@@ -278,17 +278,9 @@ jobs:
         target: [aarch64-apple-ios, aarch64-apple-ios-sim, x86_64-apple-ios]
 
     steps:
-<<<<<<< HEAD
       - name: Checkout
         uses: actions/checkout@v3
 
-=======
-      - uses: actions/checkout@v3
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 98ed9f1 (clean up features; remove chrono dependency)
-=======
->>>>>>> 15caba5 (fix merge issues)
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
@@ -310,31 +302,8 @@ jobs:
       - name: Save library
         uses: actions/upload-artifact@v3
         with:
-<<<<<<< HEAD
           name: library-${{ matrix.target}}
           path: target/${{ matrix.target }}/release/libindy_vdr.dylib
-=======
-          name: ${{ matrix.architecture}}
-          path: target/${{ matrix.architecture }}/release/libindy_vdr.dylib
-<<<<<<< HEAD
-=======
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          target: ${{ matrix.architecture }}
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release --target ${{ matrix.architecture }} --package indy-vdr
-      - name: Save library
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.architecture}}
-          path: target/${{ matrix.architecture }}/release/libindy_vdr.a
->>>>>>> 7fa12b1 (clean up features; remove chrono dependency)
->>>>>>> 98ed9f1 (clean up features; remove chrono dependency)
-=======
->>>>>>> 15caba5 (fix merge issues)
 
   create-ios-xcframework:
     name: Create iOS xcframework
